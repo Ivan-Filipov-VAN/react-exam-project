@@ -14,3 +14,9 @@ export const createRoute = async (data, token) => {
 
     return result;
 };
+
+export const getOneRoute = async (routeId) => {
+    const result = await get(`/data/routes/${routeId}`);  
+    
+    return result;
+}

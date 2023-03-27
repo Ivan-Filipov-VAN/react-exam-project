@@ -17,6 +17,7 @@ import { LogoutPage } from './components/LogoutPage/LogoutPage';
 import { ProfilePage } from './components/ProfilePage/ProfilePage';
 import { ErrorPage } from './components/ErrorPage/ErrorPage';
 import { CreatePage } from './components/CreatePage/CreatePage';
+import { RouteDetailsPage } from './components/CatalogPage/RouteDetailsPage';
 
 
 
@@ -133,6 +134,7 @@ function App() {
 
                     <Route path='/' element={<HomePage />} />
                     <Route path='/catalog' element={<CatalogPage />} />
+                    <Route path='/catalog/:routeId' element={ <RouteDetailsPage /> } />
                     <Route path='/login' element={<LoginPage />} />
                     <Route path='/logout' element={<LogoutPage />} />
                     <Route path='/create' element={<CreatePage />} />
