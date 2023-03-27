@@ -1,0 +1,17 @@
+.responsive-form {
+    width: 30%;
+    margin: 20px auto;
+
+}
+
+@media only screen and (max-width: 1024px) {
+    .responsive-form {
+        width: 50%;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .responsive-form {
+        width: 90%;
+    }
+  }
