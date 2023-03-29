@@ -10,14 +10,14 @@ export const register = async (registerData) => {
     return await post('/users/register', registerData);
 } 
 
-export const logout = async (token) => {
+export const logout = async () => {
 
-    return await get('/users/logout', undefined, token );
+    return await get('/users/logout' );
 
 };
 
-export const getLoggedInUser = async (token) => {
+export const getLoggedInUser = async () => {
 
-    return await get('/users/me', undefined, token);
+    return await get('/users/me');
 
 }

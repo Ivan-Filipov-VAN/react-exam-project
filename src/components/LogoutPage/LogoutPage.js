@@ -5,14 +5,14 @@ import { AuthContext } from "../../contexts/AuthContext";
 
 export const LogoutPage = () => {
 
-    const { onLogout , token } = useContext(AuthContext);
+    const { onLogout  } = useContext(AuthContext);
 
 
     useEffect(() => {
 
-        onLogout(token);
+        onLogout();
 
-    }, [onLogout, token]);
+    }, [onLogout]);
 
     return (
         

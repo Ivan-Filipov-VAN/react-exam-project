@@ -1,22 +1,23 @@
-import { useContext } from 'react';
 
 import { useForm } from '../../hooks/useForm';
-import { AuthContext } from '../../contexts/AuthContext';
 
 import { Link } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-export const CreatePage = () => {
+export const CreatePage = ({
+    onRouteCreateSubmit,
+}) => {
 
-    const { onRouteCreateSubmit, token } = useContext(AuthContext);
+    // const { onRouteCreateSubmit, token } = useContext(AuthContext); // token ?
+    // todo take token from local storage
 
     const { values, changeHandler, onSubmit } = useForm({
         imageUrl: '',
         title: '',
         description: '',
-    }, onRouteCreateSubmit, token);
+    }, onRouteCreateSubmit);
 
     return (
         <Form className='responsive-form' onSubmit={onSubmit}>

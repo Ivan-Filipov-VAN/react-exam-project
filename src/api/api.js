@@ -1,17 +1,7 @@
-//import current user's token
-// import { useContext } from "react";
-// import { AuthContext } from "../contexts/AuthContext";
-
 const host = 'http://localhost:3030';
 
+const request = async (url, method, data) => {
 
-
-const request = async (url, method, data, token) => {
-
-    //import current user's token
-    // const { onRegisterSubmit } = useContext(AuthContext);
-
-    // async function request(url, method, data) {
     const options = {
         method,
         headers: {}
@@ -19,17 +9,19 @@ const request = async (url, method, data, token) => {
 
     console.log(data);
 
-    // if (data !== undefined && Object.keys(data).length !== 0) {
     if (data !== undefined) {
 
         options.headers['Content-Type'] = 'application/json';
         options.body = JSON.stringify(data);
     }
 
-    // const userData = getUserData();
-    // if (userData) {
-    //     options.headers['X-Authorization'] = userData.accessToken;
-    // }
+    let token = undefined;
+    const seliazedAuth = localStorage.getItem('auth');
+    
+    if (seliazedAuth) {
+        const auth = JSON.parse(seliazedAuth);
+        token = auth.accessToken; 
+    }
 
     if (token) {
         options.headers['X-Authorization'] = token;
@@ -67,25 +59,20 @@ const request = async (url, method, data, token) => {
     }
 }
 
-// export const get = async (url) => {
 export const get = async (url, data, token) => {
-    // export async function get(url) {
     return request(url, 'get', data, token);
 }
 
 export const post = async (url, data, token) => {
-    // export async function post(url, data) {
     return request(url, 'post', data, token);
 }
 
 
 export const put = async (url, data) => {
-    // export async function put(url, data) {
     return request(url, 'put', data);
 }
 
 export const del = async (url) => {
-    // export async function del(url) {
     return request(url, 'delete');
 }
 

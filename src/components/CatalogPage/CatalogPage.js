@@ -1,16 +1,11 @@
-
-
-import { useContext } from 'react';
-
 import { RouteItem } from "./RouteItem"
-
-import { AuthContext } from '../../contexts/AuthContext';
 
 import styles from './CatalogPage.module.css';
 
-export const CatalogPage = () => {
+export const CatalogPage = ({
+    routes
+}) => {
 
-    const { routes } = useContext(AuthContext);
 
     return (
 
