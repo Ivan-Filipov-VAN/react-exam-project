@@ -12,14 +12,13 @@ export const RouteItem = (route) => {
     return (
 
         <Link to={`/catalog/${route._id}`} className={styles.divNavigation}>
-            <div className={styles.routeItem}>
-                <h1>{route.title}</h1>
-                <h4>{route.imageUrl}</h4>
-                <h3>{route.description}</h3>
-                {/* {userId === route._ownerId && <button>IS OWNER</button>} */}
-
-                {/* <Link to={`/catalog/${route._id}`} className="btn btn-secondary">Details</Link> */}
-            </div>
+            <div className={styles.card}>
+                    <img className={styles["card-img"]} src={route.imageUrl} alt={route.title}/>
+                    <h3>{route.title}</h3>
+                    <h4>{route.country}</h4>
+                    <p>{route.description}</p>
+                    {/* <button className="btn card-btn">Discover place</button> */}
+                </div>
         </Link>
     );
 

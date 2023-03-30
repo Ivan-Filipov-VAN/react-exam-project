@@ -1,4 +1,4 @@
-import { get, post, del } from '../api/api'
+import { get, post, del, put } from '../api/api'
 
 export const getAllRoutes = async () => {
     const result = await get('/data/routes');
@@ -19,4 +19,9 @@ export const getOneRoute = async (routeId) => {
 
 export const deleteRoute = async (routeId) => {
     del(`/data/routes/${routeId}`);
+};
+
+export const editRoute = async(routeId, data) => {
+    const result = await put(`/data/routes/${routeId}`, data)
+    return result;
 };

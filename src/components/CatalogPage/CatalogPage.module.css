@@ -1,8 +1,22 @@
 .catalog {
-    max-width: 90%;
-    margin: 50px auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 5vw;
+    text-align: center;
+    width: 68%;
+    margin: 72px auto 120px;
 
+}
+
+.catalog__title {
+    font-size: 38px;
+}
+
+.catalog__title-sub{
+    font-size: 24px;
+    opacity: 0.8;
+    margin-bottom: 38px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3vw;
 }

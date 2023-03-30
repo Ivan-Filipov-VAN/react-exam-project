@@ -7,8 +7,6 @@ const request = async (url, method, data) => {
         headers: {}
     };
 
-    console.log(data);
-
     if (data !== undefined) {
 
         options.headers['Content-Type'] = 'application/json';

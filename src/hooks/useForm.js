@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export const useForm = (initialValues, onSubmitHandler, token) => {
+export const useForm = (initialValues, onSubmitHandler) => {
     const [values, setValues] = useState(initialValues);
 
     const changeHandler = (e) => {
@@ -9,13 +9,20 @@ export const useForm = (initialValues, onSubmitHandler, token) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        onSubmitHandler(values, token);
+        onSubmitHandler(values);
+    };
+
+    const changeValues = (newValues) => {
+        //TODO: validate newValues shape (like Initial Values)
+
+        setValues(newValues);
     };
 
     return {
         values,
         changeHandler,
         onSubmit,
+        changeValues,
     };
 
 };

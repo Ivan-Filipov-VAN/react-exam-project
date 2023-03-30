@@ -1,27 +1,37 @@
-
-import { useForm } from '../../hooks/useForm';
-
-import { Link } from 'react-router-dom';
+import { useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import { useForm } from "../../hooks/useForm";
+import { getOneRoute } from "../../services/routeService";
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-export const CreatePage = ({
-    onRouteCreateSubmit,
+export const EditRoute = ({
+    onGameEditSubmit,
 }) => {
 
-    // const { onRouteCreateSubmit, token } = useContext(AuthContext); // token ?
-    // todo take token from local storage
+    const { routeId } = useParams();
+    console.log(routeId);
 
-    const { values, changeHandler, onSubmit } = useForm({
+    const {values, changeHandler, onSubmit, changeValues} = useForm({
+        _id: '',
         imageUrl: '',
         title: '',
         country: '',
         description: '',
-    }, onRouteCreateSubmit);
+    }, onGameEditSubmit); 
+
+    useEffect(() => {
+        getOneRoute(routeId)
+        .then(result => {
+            changeValues(result);
+        })
+    }, [routeId]);
+
 
     return (
         <Form className='responsive-form' onSubmit={onSubmit}>
+            <h1>Edit Game</h1>
             <Form.Group className="mb-3" controlId="imageUrl">
                 <Form.Label>Image Url</Form.Label>
                 <input className={values.imageUrl.length < 3 ? 'text-danger form-control' : 'form-control'}
@@ -96,10 +106,9 @@ export const CreatePage = ({
             <p>Rerurn to catalog <Link to={'/catalog'}>HERE</Link> !</p>
 
             <Button variant="primary" type="submit">
-                Create
+                Edit
             </Button>
         </Form>
     );
-
 
 };
