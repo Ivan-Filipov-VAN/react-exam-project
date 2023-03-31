@@ -7,11 +7,10 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 export const EditRoute = ({
-    onGameEditSubmit,
+    onRouteEditSubmit,
 }) => {
 
     const { routeId } = useParams();
-    console.log(routeId);
 
     const {values, changeHandler, onSubmit, changeValues} = useForm({
         _id: '',
@@ -19,7 +18,7 @@ export const EditRoute = ({
         title: '',
         country: '',
         description: '',
-    }, onGameEditSubmit); 
+    }, onRouteEditSubmit); 
 
     useEffect(() => {
         getOneRoute(routeId)

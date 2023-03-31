@@ -42,6 +42,9 @@ export const AuthProvider = ({
         console.log(data);
 
         registerData.imageUrl = '../images/userImage.png' ;
+        registerData.firstName = '';
+        registerData.lastName = '';
+
 
         const result = await userService.register(registerData);
 
@@ -56,10 +59,11 @@ export const AuthProvider = ({
 
         console.log();
 
+        
         await userService.logout();
-
-
-        setAuth({});
+        // setAuth({});
+        onClearLocalStorage();
+        
     };
 
 
@@ -71,11 +75,27 @@ export const AuthProvider = ({
 
     }
 
+    const onChangeUserDetails = async (data) => {
+        console.log(data);
+
+        const result = await userService.editUserData(data._id, data);
+        console.log(result);
+        navigate('/catalog');
+    }
+
+    const onClearLocalStorage = () => {
+        setAuth({});
+    }
+
+
+
     const context = {
         onLoginSubmit,
         onRegisterSubmit,
         onLogout,
         onLoggedInUser,
+        onChangeUserDetails,
+        onClearLocalStorage,
         userId: auth._id,
         token: auth.accessToken,
         userEmail: auth.email,

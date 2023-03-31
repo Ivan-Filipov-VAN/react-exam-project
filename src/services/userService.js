@@ -21,3 +21,8 @@ export const getLoggedInUser = async () => {
     return await get('/users/me');
 
 }
+
+export const editUserData = async (id, data) => {
+    return;
+
+};

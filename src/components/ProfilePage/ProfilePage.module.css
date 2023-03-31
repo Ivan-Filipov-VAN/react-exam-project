@@ -1,0 +1,16 @@
+.profile-container {
+    margin: 1% auto;;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+
+.profile-img {
+    width: 40%;
+    object-fit: cover;
+    border-radius: 100%;
+    margin: 3vw;
+}
