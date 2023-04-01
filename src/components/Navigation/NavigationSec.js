@@ -8,11 +8,9 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
-export const Navigation = () => {
+export const NavigationSec = () => {
 
     const { isAuthenticated, userEmail } = useContext(AuthContext);
-
-    console.log(isAuthenticated);
 
     return (
         <Navbar bg="light" expand="lg">

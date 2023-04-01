@@ -5,6 +5,7 @@ import { getOneRoute } from "../../services/routeService";
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { NavigationSec } from "../Navigation/NavigationSec";
 
 export const EditRoute = ({
     onRouteEditSubmit,
@@ -12,25 +13,25 @@ export const EditRoute = ({
 
     const { routeId } = useParams();
 
-    const {values, changeHandler, onSubmit, changeValues} = useForm({
+    const { values, changeHandler, onSubmit, changeValues } = useForm({
         _id: '',
         imageUrl: '',
         title: '',
         country: '',
         description: '',
-    }, onRouteEditSubmit); 
+    }, onRouteEditSubmit);
 
     useEffect(() => {
         getOneRoute(routeId)
-        .then(result => {
-            changeValues(result);
-        })
+            .then(result => {
+                changeValues(result);
+            })
     }, [routeId]);
 
 
     return (
         <Form className='responsive-form' onSubmit={onSubmit}>
-            <h1>Edit Game</h1>
+            <h1>Edit Place</h1>
             <Form.Group className="mb-3" controlId="imageUrl">
                 <Form.Label>Image Url</Form.Label>
                 <input className={values.imageUrl.length < 3 ? 'text-danger form-control' : 'form-control'}

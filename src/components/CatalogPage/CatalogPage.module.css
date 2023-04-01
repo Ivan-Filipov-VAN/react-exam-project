@@ -9,7 +9,7 @@
     font-size: 38px;
 }
 
-.catalog__title-sub{
+.catalog__title-sub {
     font-size: 24px;
     opacity: 0.8;
     margin-bottom: 38px;
@@ -19,4 +19,16 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 3vw;
+}
+
+@media only screen and (max-width: 960px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }

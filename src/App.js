@@ -7,7 +7,7 @@ import { AuthProvider } from './contexts/AuthContext'
 
 import { CatalogPage } from './components/CatalogPage/CatalogPage';
 
-import { Navigation } from "./components/Header/Navigation";
+import { NavigationSec } from "./components/Navigation/NavigationSec";
 
 import { HomePage } from "./components/HomePage/HomePage";
 import { LoginPage } from "./components/LoginPage/LoginPage";
@@ -19,6 +19,7 @@ import { CreatePage } from './components/CreatePage/CreatePage';
 import { RouteDetailsPage } from './components/CatalogPage/RouteDetailsPage';
 import { EditRoute } from './components/EditRoute/EditRoute';
 import { EditProfilePage } from './components/ProfilePage/EditProfilePage';
+import { Footer } from './components/Footer/Footer';
 
 function App() {
     const [routes, setRoutes] = useState([]);
@@ -54,9 +55,9 @@ function App() {
     return (
         <AuthProvider>
             <>
-                <Navigation />
+                <NavigationSec />
                 <Routes>
-                    <Route path='/' element={<HomePage />} />
+                    <Route path='/' element={<HomePage routes={routes}/>} />
                     <Route path='/catalog' element={<CatalogPage routes={routes}/>} />
                     <Route path='/catalog/:routeId' element={ <RouteDetailsPage onDeleteRoute={onDeleteRoute}/> } />
                     <Route path='/catalog/:routeId/edit' element={ <EditRoute onRouteEditSubmit={onRouteEditSubmit} /> } />
@@ -68,6 +69,8 @@ function App() {
                     <Route path='/profile/:userId/editProfile' element={ <EditProfilePage /> }/>
                     <Route path='*' element={ <ErrorPage /> } />
                 </Routes>
+                
+                <Footer />
             </>
         </AuthProvider>
     );

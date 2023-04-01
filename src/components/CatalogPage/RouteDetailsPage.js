@@ -4,8 +4,6 @@ import { getOneRoute } from '../../services/routeService';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 
-
-
 export const RouteDetailsPage = ({
     onDeleteRoute,
 }) => {
@@ -21,10 +19,8 @@ export const RouteDetailsPage = ({
         })
     }, [routeId]);
 
-
     return (
         <>
-
             <h2>DETAILS PAGE</h2>
             <h4>{route.title}</h4>
             <h4>{route.description}</h4>
