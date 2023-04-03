@@ -3,15 +3,14 @@ import styles from './HomeNavigation.module.css';
 import { Link } from 'react-router-dom'; 
 import { CatalogPage } from '../CatalogPage/CatalogPage';
 
-export const HomePage = ({ routes }) => {
-
+export const HomePage = () => {
 
     return (
         <>
         <div className={styles["header-spacer"]}></div>
         <header className={styles["header"]}>
 
-            <img className={styles["bg-img"]} src="images/landing-photo.jpg" alt="landing-photo"/>
+            <img className={styles["bg-img"]} src="images/landing-photo.jpg" alt='bg-home'/>
 
                 <NavigationHome />
 
@@ -27,7 +26,7 @@ export const HomePage = ({ routes }) => {
 
         </header>
         
-        <CatalogPage routes={routes} />
+        <CatalogPage  />
         </>
     );
 };

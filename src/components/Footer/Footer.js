@@ -1,27 +1,29 @@
+import { Link } from 'react-router-dom'; 
+
 import styles from './Footer.module.css';  
 
 export const Footer = () => {
     return (
         <footer id={styles["footer"]}>
-            <a className={styles["nav-link logo"]}   href="#"><h4>Travel</h4></a>
+            <Link to={'/'} className={styles["nav-link logo"]}><h4>Travel</h4></Link>
             <ul className={styles["contact-links"]} role="list">
-                <li><a href="#">Tour packages</a></li>
-                <li><a href="#">Personalized offers</a></li>
-                <li><a href="#">Special deals</a></li>
-                <li><a href="#">Summer holiday</a></li>
+                <li><Link to={'/'}>Tour packages</Link></li>
+                <li><Link to={'/'}>Personalized offers</Link></li>
+                <li><Link to={'/'}>Special deals</Link></li>
+                <li><Link to={'/'}>Summer holiday</Link></li>
             </ul>
             <ul className={styles["contact-links"]} role="list">
-                <li><a href="#">About us</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Terms and conditions</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><Link to={'/'}>About us</Link></li>
+                <li><Link to={'/'}>FAQ</Link></li>
+                <li><Link to={'/'}>Terms and conditions</Link></li>
+                <li><Link to={'/'}>Contact</Link></li>
             </ul>
             <div className={styles["follow"]}>
                 <h3>Follow us on</h3>
                 <ul role="list">
-                    <li><a href="#"><i className="fa-brands fa-instagram"></i></a></li>
-                    <li><a href="#"><i className="fa-brands fa-facebook-f"></i></a></li>
-                    <li><a href="#"><i className="fa-brands fa-twitter"></i></a></li>
+                    <li><Link to={'/'}><i className="fa-brands fa-instagram"></i></Link></li>
+                    <li><Link to={'/'}><i className="fa-brands fa-facebook-f"></i></Link></li>
+                    <li><Link to={'/'}><i className="fa-brands fa-twitter"></i></Link></li>
                 </ul>
             </div>
         </footer>

@@ -249,7 +249,7 @@
         grid-area: logotemp;
         display: flex;
         align-items: center; 
-        justify-content: start;
+        justify-content: flex-start;
         font-size: 24px;
     }
     .nav-icon { 

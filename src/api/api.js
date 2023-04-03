@@ -1,4 +1,3 @@
-
 const host = 'http://localhost:3030';
 
 const request = async (url, method, data) => {
@@ -33,7 +32,7 @@ const request = async (url, method, data) => {
         if (res.ok === false) {
 
             
-
+            
             if (res.status === 403) {
 
                 

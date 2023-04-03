@@ -2,9 +2,17 @@ import { RouteItem } from "./RouteItem"
 
 import styles from './CatalogPage.module.css';
 
-export const CatalogPage = ({
-    routes
-}) => {
+import { useContext } from "react";
+import { RouteContext } from "../../contexts/RouteContext";
+
+
+export const CatalogPage = (
+//     {
+//     routes
+// }
+) => {
+
+    const { routes } = useContext(RouteContext);
 
 
     return (

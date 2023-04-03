@@ -5,14 +5,18 @@ import { Link } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { NavigationSec } from '../Navigation/NavigationSec';
 
-export const CreatePage = ({
-    onRouteCreateSubmit,
-}) => {
+import { useContext } from 'react'; 
+import { RouteContext } from '../../contexts/RouteContext';
+
+export const CreatePage = () => {
+
+    const { onRouteCreateSubmit } = useContext(RouteContext);
 
     // const { onRouteCreateSubmit, token } = useContext(AuthContext); // token ?
     // todo take token from local storage
+
+
 
     const { values, changeHandler, onSubmit } = useForm({
         imageUrl: '',

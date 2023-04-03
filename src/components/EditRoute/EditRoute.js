@@ -5,11 +5,13 @@ import { getOneRoute } from "../../services/routeService";
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { NavigationSec } from "../Navigation/NavigationSec";
 
-export const EditRoute = ({
-    onRouteEditSubmit,
-}) => {
+import { useContext } from "react";
+import { RouteContext } from "../../contexts/RouteContext";
+
+export const EditRoute = () => {
+
+    const { onRouteEditSubmit } = useContext(RouteContext);
 
     const { routeId } = useParams();
 

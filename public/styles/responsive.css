@@ -1,4 +1,6 @@
 .responsive-form {
+    position: relative;
+    z-index: 5;
     width: 30%;
     margin: 20px auto;
 
