@@ -14,12 +14,14 @@ export const RegisterPage = () => {
 
     const { values, changeHandler, onSubmit } = useForm({
         email: '',
+        imageUrl: '',
         password: '',
         confirmPassword: '',
     }, onRegisterSubmit);
 
     return (
         <Form className='responsive-form' onSubmit={onSubmit}>
+
             <Form.Group className="mb-3" controlId="email">
                 <Form.Label>Email address</Form.Label>
                 <input className={values.email.length < 5 ? 'text-danger form-control' : 'form-control'}
@@ -32,6 +34,22 @@ export const RegisterPage = () => {
                 {values.email.length >= 5 ||
                     <Form.Text className="text-muted text-danger">
                         Email must be more than 5 characters!.
+                    </Form.Text>
+                }
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="imageUrl">
+                <Form.Label>Image URL</Form.Label>
+                <input className={values.imageUrl.length < 5 ? 'text-danger form-control' : 'form-control'}
+                    type="text"
+                    placeholder="Enter Image URL"
+                    name='imageUrl'
+                    value={values.imageUrl}
+                    onChange={changeHandler}
+                />
+                {values.imageUrl.length >= 5 ||
+                    <Form.Text className="text-muted text-danger">
+                        ImageUrl must be more than 5 characters!.
                     </Form.Text>
                 }
             </Form.Group>

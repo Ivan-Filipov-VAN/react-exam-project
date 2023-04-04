@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '../hooks/useLocalCrorage';
 
 import * as userService from '../services/userService';
+import * as validation from '../utils/validation';
 
 export const AuthContext = createContext();
 
@@ -10,57 +11,66 @@ export const AuthProvider = ({
     children,
 }) => {
 
-    // const [auth, setAuth] = useState({});
     const [auth, setAuth] = useLocalStorage('auth', {});
 
     const navigate = useNavigate();
 
     const onLoginSubmit = async (data) => {
 
-        //todo validation
+        try {
 
-        const result = await userService.login(data);
+            validation.ValidationLogin(data);
 
-        console.log(data);
+            const result = await userService.login(data);
 
-        setAuth(result);
+            console.log(data);
 
-        navigate('/catalog');
+            setAuth(result);
+
+            navigate('/catalog');
+        } catch (err) {
+            alert(err);
+        }
     };
 
 
     const onRegisterSubmit = async (data) => {
 
-        //todo validation
-        // if (data.password !== data.confirmPassword) {
-        //     return alert('Confirm Password don\'t match!');
-        // }
+        try {
 
-        const { confirmPassword, ...registerData } = data;
+            //todo validation
+            // if (data.password !== data.confirmPassword) {
+            //     throw ('Password don\'t matach !');
+            // }
 
-        console.log(registerData);
-        console.log(data);
+            validation.ValidationRegister(data);
 
-        registerData.imageUrl = '../images/userImage.png' ;
-        registerData.firstName = '';
-        registerData.lastName = '';
+            const { confirmPassword, ...registerData } = data;
+
+            console.log(registerData);
+            console.log(data);
+
+            registerData.firstName = '';
+            registerData.lastName = '';
+
+            const result = await userService.register(registerData);
+
+            setAuth(result);
 
 
-        const result = await userService.register(registerData);
+            navigate('/catalog');
 
-        setAuth(result);
-
-
-        navigate('/catalog');
-
+        } catch (err) {
+            alert(err);
+        }
     };
 
     const onLogout = async () => {
-        
+
         await userService.logout();
         // setAuth({});
         onClearLocalStorage();
-        
+
     };
 
 
@@ -68,7 +78,7 @@ export const AuthProvider = ({
 
         const result = await userService.getLoggedInUser();
 
-        return(result);
+        return (result);
 
     }
 
@@ -96,6 +106,7 @@ export const AuthProvider = ({
         userId: auth._id,
         token: auth.accessToken,
         userEmail: auth.email,
+        userImageUrl: auth.imageUrl,
         isAuthenticated: !!auth.accessToken,
     }
 
@@ -103,7 +114,7 @@ export const AuthProvider = ({
         <>
             <AuthContext.Provider value={context}>
                 {children}
-            </AuthContext.Provider>    
+            </AuthContext.Provider>
         </>
 
     );

@@ -8,13 +8,13 @@ import * as routeService from '../../services/routeService';
 import * as commentService from '../../services/commentService';
 import { CommentCard } from '../Comments/CommentCard';
 
-
+import styles from './Details.module.css';
 
 export const RouteDetailsPage = () => {
 
     const { routeId } = useParams();
     const [route, setRoute] = useState({});
-    const { userId, userEmail, isAuthenticated } = useContext(AuthContext);
+    const { userId, userEmail, userImageUrl, isAuthenticated } = useContext(AuthContext);
     const { onDeleteRoute } = useContext(RouteContext);
 
     const [showAddComment, seStshowAddComment] = useState(false);
@@ -57,6 +57,7 @@ export const RouteDetailsPage = () => {
                         //todo
                         _id: userId,
                         email: userEmail,
+                        imageUrl: userImageUrl,
                     }
                 }
             ]
@@ -73,34 +74,53 @@ export const RouteDetailsPage = () => {
 
     return (
         <>
-            {showAddComment && <Addcomment show={showAddComment} onClose={onClose} onAddComment={onAddComment} />}
+            <h1 className={styles['details-head']}>DETAILS PAGE</h1>
+            <div className={styles['details-container']}>
+                {showAddComment && <Addcomment show={showAddComment} onClose={onClose} onAddComment={onAddComment} />}
 
-            <h2>DETAILS PAGE</h2>
-            <h4>{route.title}</h4>
-            <h4>{route.description}</h4>
-            <h4>{route.imageUrl}</h4>
-            <h4>{route._ownerId}</h4>
+                <img className={styles['details-img']} src={route.imageUrl} alt={route.title} />
+                <div className={styles.details}>
 
-            {isOwner && (
-                <div className='buttons'>
-                    <Link to={`/catalog/${route._id}/edit`} className="btn-pro">Edit</Link>
-                    <button onClick={() => onDeleteRoute(route._id)} className="btn-pro">Delete</button>
+
+                    <p className={styles['details-title']}>{route.title}</p>
+                    <p className={styles['details-desc']}>{route.description}</p>
+                    {/* <p>{route._ownerId}</p> */}
+
+
+                    {
+                        isOwner && (
+                            <div className='buttons'>
+                                <Link to={`/catalog/${route._id}/edit`} className="btn-pro">Edit</Link>
+                                <button onClick={() => onDeleteRoute(route._id)} className="btn-pro">Delete</button>
+                            </div>
+                        )
+                    }
+
+                    {
+                        (!isOwner && isAuthenticated) && (
+                            <div className='buttons'>
+                                <button className="btn-pro" onClick={onCommentAddClick} >Comment</button>
+                            </div>
+                        )
+                    }
+
                 </div>
-            )}
+            </div >
 
-            {(!isOwner && isAuthenticated) && (
-                <div className='buttons'>
-                    <button className="btn-pro" onClick={onCommentAddClick} >Comment</button>
-                </div>
-            )}
-
-            {route.comments && <h2>Comments:</h2>}
-
-            {route.comments &&
-                route.comments.map(x => <CommentCard key={x._id} {...x} />)
-            }
 
             {!route.comments?.length && <h2>No Comments !</h2>}
+
+            {route.comments && <>
+                <h2 className={styles.comments}>Comments:</h2>
+                <div className={styles['comments-cards']}>
+
+                    {
+                        route.comments.map(x => <CommentCard key={x._id} {...x} />)
+                    }
+                </div>
+            </>
+            }
+
 
         </>
     );
