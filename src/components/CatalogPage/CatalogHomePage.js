@@ -6,9 +6,9 @@ import { useContext } from "react";
 import { RouteContext } from "../../contexts/RouteContext";
 
 
-export const CatalogPage = () => {
+export const CatalogHomePage = () => {
 
-    const { routes } = useContext(RouteContext);
+    const { randomRoutes } = useContext(RouteContext);
 
 
     return (
@@ -16,9 +16,9 @@ export const CatalogPage = () => {
             <h2 className={styles["catalog__title"]}>Most famous places</h2>
             <p className={styles["catalog__title-sub"]} >Recommended</p>
             <div className={styles.cards}>
-                {routes.map(x => <RouteItem key={x._id} {...x} />)}
+                {randomRoutes.map(x => <RouteItem key={x._id} {...x} />)}
             </div>
-            {routes.length === 0 && <h3 className="no-articles">No articles yet</h3>}
+            {randomRoutes.length === 0 && <h3 className="no-articles">No articles yet</h3>}
         </section>
     );
 }

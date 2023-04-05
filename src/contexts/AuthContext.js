@@ -67,9 +67,15 @@ export const AuthProvider = ({
 
     const onLogout = async () => {
 
-        await userService.logout();
-        // setAuth({});
-        onClearLocalStorage();
+        try {
+
+            await userService.logout();
+            // setAuth({});
+            onClearLocalStorage();
+        } catch(err) {
+            console.log(err.message);
+            onClearLocalStorage();
+        }
 
     };
 

@@ -38,7 +38,7 @@ const request = async (url, method, data) => {
                 
 
                 //todo clear userData
-                localStorage.clear();
+                // localStorage.clear();
                 
                 console.log('before return');
                 const error = await res.json();
@@ -58,7 +58,7 @@ const request = async (url, method, data) => {
 
     } catch (err) {
 
-        alert(err.message);
+        // alert(err.message);
         throw err;
     }
 }
