@@ -8,7 +8,7 @@ export const RouteProvider = ({
     children,
 }) => {
 
-    const DEFINE_PAGE_SIZE = 6;
+    const DEFAULT_PAGE_SIZE = 6;
 
     const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ export const RouteProvider = ({
     const [randomRoutes, setRandomRoutes] = useState([]);
     const [pageRoutes, setPageRoutes] = useState([]);
     const [page, setPage] = useState(0);
-    const [pageSize] = useState(DEFINE_PAGE_SIZE);
+    const [pageSize] = useState(DEFAULT_PAGE_SIZE);
 
     useEffect(() => {
 
@@ -65,7 +65,6 @@ export const RouteProvider = ({
             .then(result => {
                 console.log('do')
                 setPageRoutes(result);
-                // setRandomRoutes(result.slice(0, 3));
             })
         }, [pageSize, page]);
 
@@ -74,8 +73,10 @@ export const RouteProvider = ({
         const newRoute = await routeService.createRoute(data);
         setRoutes(state => [...state, newRoute]);
 
-        setPageRoutes(state => [...state, newRoute]);
-        navigate('/');
+        if (pageRoutes.length < DEFAULT_PAGE_SIZE) {
+            setPageRoutes(state => [...state, newRoute]);
+        }
+        navigate('/catalog');
     }
 
     const onRouteEditSubmit = async (data) => {

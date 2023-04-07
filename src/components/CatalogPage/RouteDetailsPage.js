@@ -6,6 +6,9 @@ import { RouteContext } from '../../contexts/RouteContext';
 import { Addcomment } from '../Comments/AddComment';
 import * as routeService from '../../services/routeService';
 import * as commentService from '../../services/commentService';
+
+import * as likeService from '../../services/likeService';
+
 import { CommentCard } from '../Comments/CommentCard';
 
 import styles from './Details.module.css';
@@ -15,6 +18,10 @@ export const RouteDetailsPage = () => {
     const { routeId } = useParams();
     const [route, setRoute] = useState({});
     const { userId, userEmail, userImageUrl, isAuthenticated } = useContext(AuthContext);
+
+    const [likes, setLikes] = useState(0);
+    const [canLike, setCalLike] = useState(0);
+
     const { onDeleteRoute } = useContext(RouteContext);
 
     const [showAddComment, seStshowAddComment] = useState(false);
@@ -40,7 +47,19 @@ export const RouteDetailsPage = () => {
         //     })
     }, [routeId]);
 
-    console.log(route);
+    useEffect(() => {
+        likeService.getRoutesLikes(route._id)
+            .then(result => (
+                setLikes(result)
+            ))
+    });
+
+    useEffect(() => {
+        likeService.checkIfUserCanLike(route._id, userId)
+        .then(result => {
+            setCalLike(result)
+        })
+    });
 
     const isOwner = userId === route._ownerId;
 
@@ -72,6 +91,18 @@ export const RouteDetailsPage = () => {
         seStshowAddComment(false);
     }
 
+    const onLikeClick = () => {
+        likeService.onLikeSubmit(route._id);
+        setLikes(likes + 1);
+    }
+
+    const onDislikeClick = () => {
+        likeService.onDislikeSubmit(route._id, userId);
+        setLikes(likes - 1);
+    }
+
+    const ifUserCanLike = canLike === 0 && route._ownerId !== userId;
+
     return (
         <>
             <h1 className={styles['details-head']}>DETAILS PAGE</h1>
@@ -83,6 +114,7 @@ export const RouteDetailsPage = () => {
 
 
                     <p className={styles['details-title']}>{route.title}</p>
+                    <p className={styles['details-desc']}>Likes: {likes}</p>
                     <p className={styles['details-desc']}>{route.description}</p>
                     {/* <p>{route._ownerId}</p> */}
 
@@ -100,6 +132,8 @@ export const RouteDetailsPage = () => {
                         (!isOwner && isAuthenticated) && (
                             <div className='buttons'>
                                 <button className="btn-pro" onClick={onCommentAddClick} >Comment</button>
+                                {ifUserCanLike && <button className="btn-pro" onClick={onLikeClick} >Like</button>}
+                                {!ifUserCanLike && <button className="btn-pro" onClick={onDislikeClick} >Dislike</button>}
                             </div>
                         )
                     }
