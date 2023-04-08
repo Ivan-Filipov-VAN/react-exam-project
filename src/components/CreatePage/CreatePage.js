@@ -13,11 +13,6 @@ export const CreatePage = () => {
 
     const { onRouteCreateSubmit } = useContext(RouteContext);
 
-    // const { onRouteCreateSubmit, token } = useContext(AuthContext); // token ?
-    // todo take token from local storage
-
-
-
     const { values, changeHandler, onSubmit } = useForm({
         imageUrl: '',
         title: '',
@@ -80,9 +75,8 @@ export const CreatePage = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="description">
-                {/* <Form.Group className={values.confirmPassword.length < 3 ? 'text-danger mb-3' : 'mb-3'}  controlId="confirmPassword"> */}
                 <Form.Label>Description</Form.Label>
-                <input className={values.description.length < 5 ? 'text-danger form-control' : 'form-control'}
+                <input className={values.description.length < 3 ? 'text-danger form-control' : 'form-control'}
                     type="text"
                     placeholder="description"
                     name='description'
@@ -90,9 +84,9 @@ export const CreatePage = () => {
                     onChange={changeHandler}
                 />
 
-                {values.description.length >= 5 ||
+                {values.description.length >= 3 ||
                     <Form.Text className="text-muted text-danger">
-                        Description must be more than 5 characters!.
+                        Description must be more than 3 characters!.
                     </Form.Text>
                 }
 

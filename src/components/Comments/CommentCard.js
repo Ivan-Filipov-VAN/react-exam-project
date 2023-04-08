@@ -1,7 +1,7 @@
 import styles from './CommentCard.module.css';
 
 export const CommentCard = (comment) => {
-    console.log(comment);
+
     return (
         <div className={styles['comment-card']}>
             <div className={styles['coment-auth']}>

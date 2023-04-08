@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as routeService from '../services/routeService';
+import * as validation from '../utils/validation';
 
 export const RouteContext = createContext();
 
@@ -19,15 +20,13 @@ export const RouteProvider = ({
     const [pageSize] = useState(DEFAULT_PAGE_SIZE);
 
     useEffect(() => {
-
         routeService.getAllRoutes()
             .then(result => {
-                console.log('do')
                 setRoutes(result);
                 setRandomRoutes(result.slice(0, 3));
             })
-        }, []);
-        useEffect(() => {
+    }, []);
+    useEffect(() => {
 
         const interval = setInterval(() => {
 
@@ -49,7 +48,6 @@ export const RouteProvider = ({
                 temp.splice(ind, 1);
             }
 
-            console.log(q);
             setRandomRoutes(q);
 
 
@@ -63,29 +61,33 @@ export const RouteProvider = ({
     useEffect(() => {
         routeService.getPageRoute(pageSize, page)
             .then(result => {
-                console.log('do')
                 setPageRoutes(result);
             })
-        }, [pageSize, page]);
-
+    }, [pageSize, page]);
 
     const onRouteCreateSubmit = async (data) => {
-        const newRoute = await routeService.createRoute(data);
-        setRoutes(state => [...state, newRoute]);
 
-        if (pageRoutes.length < DEFAULT_PAGE_SIZE) {
-            setPageRoutes(state => [...state, newRoute]);
+        try {
+            validation.ValidationCreareRoute(data);
+
+            const newRoute = await routeService.createRoute(data);
+            setRoutes(state => [...state, newRoute]);
+
+            if (pageRoutes.length < DEFAULT_PAGE_SIZE) {
+                setPageRoutes(state => [...state, newRoute]);
+            }
+            navigate('/catalog');
+        } catch (err) {
+            alert(err);
         }
-        navigate('/catalog');
     }
 
     const onRouteEditSubmit = async (data) => {
-        console.log(data);
         const newRoute = await routeService.editRoute(data._id, data);
         setRoutes(state => state.map(x => x._id === data._id ? newRoute : x));
         setPageRoutes(state => state.map(x => x._id === data._id ? newRoute : x));
         setRandomRoutes(state => state.map(x => x._id === data._id ? newRoute : x));
-        
+
         navigate('/catalog');
     };
 
@@ -95,31 +97,25 @@ export const RouteProvider = ({
 
         setPageRoutes(state => state.filter(x => x._id !== routeId));
 
-        console.log(routes);
         navigate('/catalog');
     }
 
     const next = (page) => {
-        console.log(page);
-        
+
         if (page >= (Math.ceil(routes.length / pageSize) - 1)) {
             setPage(Math.ceil(routes.length / pageSize) - 1);
         } else {
-
             setPage(page + 1);
         }
     };
 
     const previous = (page) => {
-        console.log(page);
         if (page <= 0) {
             setPage(0);
         } else {
-
             setPage(page - 1);
         }
     };
-
 
     const context = {
         pageRoutes,

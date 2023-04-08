@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useContext } from 'react';
+
 import { AuthContext } from '../../contexts/AuthContext';
 import { RouteContext } from '../../contexts/RouteContext';
 import { Addcomment } from '../Comments/AddComment';
+
 import * as routeService from '../../services/routeService';
 import * as commentService from '../../services/commentService';
-
 import * as likeService from '../../services/likeService';
 
 import { CommentCard } from '../Comments/CommentCard';
@@ -33,8 +33,6 @@ export const RouteDetailsPage = () => {
             commentService.getAllComments(routeId),
         ])
             .then(([routeData, comments]) => {
-                console.log(routeData)
-                console.log(comments)
                 setRoute({
                     ...routeData,
                     comments,
@@ -112,8 +110,8 @@ export const RouteDetailsPage = () => {
                 <img className={styles['details-img']} src={route.imageUrl} alt={route.title} />
                 <div className={styles.details}>
 
-
                     <p className={styles['details-title']}>{route.title}</p>
+                    <p className={styles['details-desc']}>Country: {route.country}</p>
                     <p className={styles['details-desc']}>Likes: {likes}</p>
                     <p className={styles['details-desc']}>{route.description}</p>
                     {/* <p>{route._ownerId}</p> */}
@@ -141,11 +139,10 @@ export const RouteDetailsPage = () => {
                 </div>
             </div >
 
-
-            {!route.comments?.length && <h2>No Comments !</h2>}
+            {!route.comments?.length ? <h2 className={styles.comments}>No Comments !</h2> : <h2 className={styles.comments}>Comments:</h2> }
 
             {route.comments && <>
-                <h2 className={styles.comments}>Comments:</h2>
+                {/* <h2 className={styles.comments}>Comments:</h2> */}
                 <div className={styles['comments-cards']}>
 
                     {
@@ -154,8 +151,6 @@ export const RouteDetailsPage = () => {
                 </div>
             </>
             }
-
-
         </>
     );
 };

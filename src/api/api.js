@@ -31,16 +31,8 @@ const request = async (url, method, data) => {
 
         if (res.ok === false) {
 
-            
-            
             if (res.status === 403) {
 
-                
-
-                //todo clear userData
-                // localStorage.clear();
-                
-                console.log('before return');
                 const error = await res.json();
                 throw new Error(error.message);;
 

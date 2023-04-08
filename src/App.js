@@ -14,6 +14,7 @@ import { RouteDetailsPage } from './components/CatalogPage/RouteDetailsPage';
 import { EditRoute } from './components/EditRoute/EditRoute';
 import { EditProfilePage } from './components/ProfilePage/EditProfilePage';
 import { Footer } from './components/Footer/Footer';
+import { AboutPage } from './components/AoutPage/AboutPage';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
                         <Route path='/register' element={<RegisterPage />} />
                         <Route path='/profile' element={<ProfilePage />} />
                         <Route path='/profile/:userId/editProfile' element={<EditProfilePage />} />
+                        <Route path='/about' element={<AboutPage />} />
                         <Route path='*' element={<ErrorPage />} />
                     </Routes>
 

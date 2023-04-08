@@ -13,7 +13,7 @@ export const CatalogHomePage = () => {
 
     return (
         <section className={styles.catalog}>
-            <h2 className={styles["catalog__title"]}>Most famous places</h2>
+            <h2 className={styles["catalog__title"]}>Proposal for new experience</h2>
             <p className={styles["catalog__title-sub"]} >Recommended</p>
             <div className={styles.cards}>
                 {randomRoutes.map(x => <RouteItem key={x._id} {...x} />)}

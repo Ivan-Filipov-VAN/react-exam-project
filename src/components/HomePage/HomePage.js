@@ -16,11 +16,11 @@ export const HomePage = () => {
                 <NavigationHome />
 
                 <div className={styles["main__block"]}>
-                    <h1 className={styles["main__title"]}>Book an exclusive</h1>
+                    <h1 className={styles["main__title"]}>Find new experiance</h1>
                     <h3 className={styles["main__sub-title"]}>home for your personal travel</h3>
                     <p className={styles["main__desc"]}>Each property is hand-picked,</p>
                     <p className={styles["main__desc"]}>personally visited and cannot be found elsewhere.</p>
-                    <Link to={'/catalog'} className='btn-me main__btn'>Explore homes</Link>
+                    <Link to={'/catalog'} className='btn-me main__btn'>Explore places</Link>
                 </div>
 
                 

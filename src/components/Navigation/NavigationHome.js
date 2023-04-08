@@ -22,7 +22,7 @@ export const NavigationHome = () => {
                     <i className={(`${styles['nav-icon']} fa-solid fa-bars`)}></i>
 
                     <nav className={styles['nav']}>
-                        <ul className={styles["nav-items"]} role="list">
+                        <ul className={styles["nav-items"]} role='list'>
                             <li className={styles["nav-item"]}><Link to={'/catalog'} className={styles["nav-link"]} >Explore places</Link></li>
 
                             {!isAuthenticated && <>
@@ -36,8 +36,7 @@ export const NavigationHome = () => {
                             <li className={styles["nav-item"]}><Link className={styles['nav-link']} to={'/profile'}>{userEmail}</Link></li>
                             </>}
 
-
-                            <li className={styles["nav-item"]}><a className={styles['nav-link']} href="#">About</a></li>
+                            <li className={styles["nav-item"]}><Link className={styles['nav-link']} to={'/about'}>About</Link></li>
                         </ul>
                     </nav>
 

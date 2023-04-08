@@ -17,17 +17,13 @@ export const ProfilePage = () => {
         .then(result => setUser(result))
     }, [onLoggedInUser]);
 
-    console.log(user);
-
     return(
         <div className={styles['profile-container']}>
             <h2>Details Page</h2>
             <img className={styles['profile-img']} src={user.imageUrl} alt="UserImg" />
-            <h3>{user._id}</h3>
             <h3>{user.firstName}</h3>
             <h3>{user.lastName}</h3>
             <h3>{user.email}</h3>
-            <h3>{user.password}</h3>
             <Link to={`/profile/${user._id}/editProfile`} className="btn-pro">EDIT DETAILS</Link>
         </div>
 

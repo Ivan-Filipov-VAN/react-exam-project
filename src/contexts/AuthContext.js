@@ -23,8 +23,6 @@ export const AuthProvider = ({
 
             const result = await userService.login(data);
 
-            console.log(data);
-
             setAuth(result);
 
             navigate('/catalog');
@@ -33,22 +31,13 @@ export const AuthProvider = ({
         }
     };
 
-
     const onRegisterSubmit = async (data) => {
 
         try {
 
-            //todo validation
-            // if (data.password !== data.confirmPassword) {
-            //     throw ('Password don\'t matach !');
-            // }
-
             validation.ValidationRegister(data);
 
             const { confirmPassword, ...registerData } = data;
-
-            console.log(registerData);
-            console.log(data);
 
             registerData.firstName = '';
             registerData.lastName = '';
@@ -56,7 +45,6 @@ export const AuthProvider = ({
             const result = await userService.register(registerData);
 
             setAuth(result);
-
 
             navigate('/catalog');
 
@@ -68,29 +56,19 @@ export const AuthProvider = ({
     const onLogout = async () => {
 
         try {
-
             await userService.logout();
-            // setAuth({});
             onClearLocalStorage();
         } catch(err) {
-            console.log(err.message);
             onClearLocalStorage();
         }
-
     };
 
-
     const onLoggedInUser = async () => {
-
         const result = await userService.getLoggedInUser();
-
         return (result);
-
     }
 
     const onChangeUserDetails = async (data) => {
-        console.log(data);
-
         const result = await userService.editUserData(data._id, data);
         console.log(result);
         navigate('/catalog');
@@ -99,8 +77,6 @@ export const AuthProvider = ({
     const onClearLocalStorage = () => {
         setAuth({});
     }
-
-
 
     const context = {
         onLoginSubmit,
