@@ -17,7 +17,7 @@ export const getAllComments = async (routeId) => {
     const searchQuery = encodeURIComponent(`routeId="${routeId}"`);
     const relationQuerry = encodeURIComponent(`author=_ownerId:users`);
 
-    const result = await get(`${baseUrl}?where=${searchQuery}&load=${relationQuerry}`);
+    const result = await get(`${baseUrl}?where=${searchQuery}&load=${relationQuerry}&sortBy=_createdOn%20desc`);
     const comments = Object.values(result);
 
     return comments;

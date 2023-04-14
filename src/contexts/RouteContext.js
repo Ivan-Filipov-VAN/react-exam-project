@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as routeService from '../services/routeService';
+import * as placeService from '../services/placeService';
 import * as validation from '../utils/validation';
 
 export const RouteContext = createContext();
@@ -19,13 +20,30 @@ export const RouteProvider = ({
     const [page, setPage] = useState(0);
     const [pageSize] = useState(DEFAULT_PAGE_SIZE);
 
+    const [ places, setPlaces ] = useState([]);
+    const [randomPlaces, setRandomPlaces] = useState([]);
+
+
+    // useEffect(() => {
+    //     routeService.getAllRoutes()
+    //         .then(result => {
+    //             setRoutes(result);
+    //             setRandomRoutes(result.slice(0, 3));
+    //         })
+    // }, []);
+
     useEffect(() => {
-        routeService.getAllRoutes()
-            .then(result => {
-                setRoutes(result);
-                setRandomRoutes(result.slice(0, 3));
-            })
+        Promise.all([
+            routeService.getAllRoutes(),
+            placeService.getAllPlaces(),
+        ])
+        .then(([resRoutes, resPlaces]) => {
+            setRoutes(resRoutes);
+            setPlaces(resPlaces);
+        })
     }, []);
+
+
     useEffect(() => {
 
         const interval = setInterval(() => {
@@ -50,13 +68,33 @@ export const RouteProvider = ({
 
             setRandomRoutes(q);
 
+            let w = [];
+            let temp2 = [...places]
+            if (temp2.length > 0) {
+                let ind = Math.floor(Math.random() * temp2.length);
+                w.push(temp2[ind]);
+                temp2.splice(ind, 1);
+            }
+            if (temp2.length > 0) {
+                let ind = Math.floor(Math.random() * temp2.length);
+                w.push(temp2[ind]);
+                temp2.splice(ind, 1);
+            }
+            if (temp2.length > 0) {
+                let ind = Math.floor(Math.random() * temp2.length);
+                w.push(temp2[ind]);
+                temp2.splice(ind, 1);
+            }
+
+            setRandomPlaces(w);
+
 
         }, 5000);
         return () => {
             clearInterval(interval);
         };
 
-    }, [routes]);
+    }, [routes, places]);
 
     useEffect(() => {
         routeService.getPageRoute(pageSize, page)
@@ -100,6 +138,24 @@ export const RouteProvider = ({
         navigate('/catalog');
     }
 
+
+    const onPlaceCreateSubmit = async (data) =>  {
+        try {validation.ValidationCreareRoute(data);
+            
+
+            const newRoute = await placeService.createPlace(data);
+            setPlaces(state => [...state, newRoute]);
+
+            // if (pageRoutes.length < DEFAULT_PAGE_SIZE) {
+            //     setPageRoutes(state => [...state, newRoute]);
+            // }
+            navigate(`/catalog/${data.routeId}`);
+        } catch (err) {
+            alert(err);
+        }
+    };
+
+
     const next = (page) => {
 
         if (page >= (Math.ceil(routes.length / pageSize) - 1)) {
@@ -117,13 +173,54 @@ export const RouteProvider = ({
         }
     };
 
+    const getRoute = (routeId) => {
+        console.log(routes);
+        return routes.find(r => r._id === routeId);
+        
+    };
+
+    const setMainPlaces = (place) => {
+        setPlaces(state => [place, ...state]);
+    }
+
+    const getPlaceById = (placeId) => {
+        return places.find(p => p._id === placeId);
+    }
+
+    const getAllPlacesById = (routeId) => {
+        const placesById = places.filter(p => p.routeId === routeId);
+        console.log(placesById)
+        return placesById;
+    }
+
+    const onDeletePlace = (placeId) => {
+
+        placeService.deletePlace(placeId);
+        setPlaces(state => state.filter(p => p._id !== placeId));
+
+        // setPageRoutes(state => state.filter(x => x._id !== routeId));
+
+        navigate('/catalog');
+    };
+
     const context = {
+
+        getAllPlacesById,
+        onDeletePlace,
+
         pageRoutes,
         routes,
+        getRoute,
         randomRoutes,
+        
         onRouteCreateSubmit,
         onRouteEditSubmit,
         onDeleteRoute,
+
+        randomPlaces,
+        setMainPlaces,
+        getPlaceById,
+        onPlaceCreateSubmit,
 
         next,
         previous,

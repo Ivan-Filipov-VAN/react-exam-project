@@ -1,0 +1,158 @@
+.place-details-container {
+    position: relative;
+    width: 80vw;
+    height: 35vw;
+    margin: 2vw auto;
+    display: flex;
+    gap: 1vw;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.place-description-container {
+    background-color: gainsboro;
+    text-align: center;
+    width: 35vw;
+    overflow: hidden;
+    border-radius: 10% 2% 2% 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.place-description-title {
+    font-size: 2vw;
+    margin: 0.4vw;
+}
+
+.place-description-content {
+    font-size: 1.2vw;
+    margin: 0.8vw;
+    display: flex;
+}
+
+
+
+
+
+
+
+.place-info-container {
+    background-color: rgb(238, 235, 235) ;
+    text-align: center;
+
+    overflow: hidden;
+    border-radius: 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    position: relative;
+}
+
+.place-info-title {
+    margin-top: 2vw;
+}
+
+.place-info-text {
+    font-size: 0.8vw;
+    margin-top: 2vw;
+}
+
+.place-info-location {
+    font-size: 1vw;
+}
+
+.place-link-img {
+    width: 8vw;
+    height: 8vw;
+    position: relative;
+    margin: 1vw;
+    transition: all 200ms ease-in-out;
+}
+
+.place-link-img:hover {
+    transform: scale(1.046);
+}
+
+
+.place-info-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20%;
+
+    
+}
+
+
+
+.place-img-container {
+    background-color: gainsboro;
+    position: relative;
+    width: 35vw;
+    height: 35vw;
+    /* border-top-right-radius: 20%;
+    border-bottom-right-radius: 10%; */
+    overflow: hidden;
+    border-radius: 2% 20% 10% 2%;
+}
+
+.place-img-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.place-button-group {
+    width: 60%;
+    margin: 0 auto 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 2vw;
+}
+
+.place-btn-edit {
+
+    text-decoration: none;
+    font-size: 1.4vw;
+    letter-spacing: 0.4vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 2vw;
+    color: gray;
+    background-color: gainsboro;
+    transition: all 300ms ease-in-out;
+
+
+}
+.place-btn-edit:hover {
+    background-color: gray;
+    color: greenyellow;
+}
+
+.place-btn-delete {
+    border: none;   
+    text-decoration: none;
+    font-size: 1.4vw;
+    letter-spacing: 0.4vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 2vw;
+    color: gray;
+    background-color: gainsboro;
+    transition: all 300ms ease-in-out;
+
+}
+.place-btn-delete:hover {
+    background-color: gray;
+    color: red;
+}

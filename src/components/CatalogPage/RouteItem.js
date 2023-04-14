@@ -35,10 +35,11 @@ export const RouteItem = (route) => {
     }
 
     const ifUserCanLike = canLike === 0 && route._ownerId !== userId;
+    const path = route.routeId ? 'catalogPlace' : 'catalog';
 
     return (
         <div className={styles['card-container']}>
-            <Link to={`/catalog/${route._id}`} className={styles.divNavigation} >
+            <Link to={`/${path}/${route._id}`} className={styles.divNavigation} >
                 <div className={styles.card}>
                     <img className={styles["card-img"]} src={route.imageUrl} alt={route.title} />
                     <h3>{route.title}</h3>

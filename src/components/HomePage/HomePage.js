@@ -1,7 +1,6 @@
 import { NavigationHome } from '../Navigation/NavigationHome';
 import styles from './HomeNavigation.module.css';
 import { Link } from 'react-router-dom'; 
-// import { CatalogPage } from '../CatalogPage/CatalogPage';
 import { CatalogHomePage } from '../CatalogPage/CatalogHomePage';
 
 export const HomePage = () => {

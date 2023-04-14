@@ -6,7 +6,7 @@
     color: white;
     border: none;
     border-radius: 25px;
-    margin-top: 5vw;
+    margin: 5vw 5px 0; 
     text-decoration: none;
     transition: all 300ms ease-in-out;
 }

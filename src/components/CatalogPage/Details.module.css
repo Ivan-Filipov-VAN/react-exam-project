@@ -1,6 +1,5 @@
-
 .details-head {
-    text-align: center;    
+    text-align: center;
 }
 
 .details-container {
@@ -28,6 +27,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1vw;
 }
 
 .details-title {
@@ -45,10 +45,35 @@
 
 .comments-cards {
     width: 80%;
-    margin: 2vw auto  ;
+    margin: 2vw auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1vw;
+}
+
+.places-cards {
+    width: 82%;
+    margin: 1vw auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 1vw;
+}
+
+@media only screen and (max-width: 1600px) {
+
+    .places-cards {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+
+    .places-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media only screen and (max-width: 1024px) {
@@ -66,10 +91,20 @@
         height: 100%;
     }
 
-    
-
 
     .comments-cards {
         grid-template-columns: repeat(1, 1fr);
     }
-  }
+
+    .places-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 750px) {
+
+
+    .places-cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
