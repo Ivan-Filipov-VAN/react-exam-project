@@ -4,8 +4,8 @@
     height: 35vw;
     margin: 2vw auto;
     display: flex;
-    gap: 1vw;
     justify-content: space-between;
+    gap: 1vw;
     overflow: hidden;
 }
 
@@ -46,7 +46,7 @@
     border-radius: 1vw;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     text-align: center;
     position: relative;
 }

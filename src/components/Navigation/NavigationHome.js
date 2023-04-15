@@ -23,7 +23,8 @@ export const NavigationHome = () => {
 
                     <nav className={styles['nav']}>
                         <ul className={styles["nav-items"]} role='list'>
-                            <li className={styles["nav-item"]}><Link to={'/catalog'} className={styles["nav-link"]} >Explore places</Link></li>
+                            <li className={styles["nav-item"]}><Link to={'/catalog'} className={styles["nav-link"]} >Explore routes</Link></li>
+                            <li className={styles["nav-item"]}><Link to={'/catalogPlace'} className={styles["nav-link"]} >Explore places</Link></li>
 
                             {!isAuthenticated && <>
                             <li className={styles["nav-item"]}><Link className={styles['nav-link']} to={'/login'}>Login</Link></li>

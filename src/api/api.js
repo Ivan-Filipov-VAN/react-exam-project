@@ -34,7 +34,7 @@ const request = async (url, method, data) => {
             if (res.status === 403) {
 
                 const error = await res.json();
-                throw new Error(error.message);;
+                throw new Error(error.message);
 
             }
 
@@ -49,7 +49,6 @@ const request = async (url, method, data) => {
         }
 
     } catch (err) {
-
         // alert(err.message);
         throw err;
     }

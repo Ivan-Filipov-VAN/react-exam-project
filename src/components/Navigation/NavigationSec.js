@@ -23,7 +23,12 @@ export const NavigationSec = () => {
 
                         <Nav>
                             <Link className='nav-link' to={'/catalog'}>
-                                Catalog
+                                Catalog route
+                            </Link>
+                        </Nav>
+                        <Nav>
+                            <Link className='nav-link' to={'/catalogPlace'}>
+                                Catalog place
                             </Link>
                         </Nav>
 

@@ -19,7 +19,7 @@ export const HomePage = () => {
                     <h3 className={styles["main__sub-title"]}>home for your personal travel</h3>
                     <p className={styles["main__desc"]}>Each property is hand-picked,</p>
                     <p className={styles["main__desc"]}>personally visited and cannot be found elsewhere.</p>
-                    <Link to={'/catalog'} className='btn-me main__btn'>Explore places</Link>
+                    <Link to={'/catalog'} className='btn-me main__btn'>Explore routes</Link>
                 </div>
 
                 

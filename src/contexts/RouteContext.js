@@ -11,6 +11,7 @@ export const RouteProvider = ({
 }) => {
 
     const DEFAULT_PAGE_SIZE = 6;
+    const DEFAULT_PAGE_SIZE_PLACES = 12;
 
     const navigate = useNavigate();
 
@@ -22,15 +23,9 @@ export const RouteProvider = ({
 
     const [ places, setPlaces ] = useState([]);
     const [randomPlaces, setRandomPlaces] = useState([]);
-
-
-    // useEffect(() => {
-    //     routeService.getAllRoutes()
-    //         .then(result => {
-    //             setRoutes(result);
-    //             setRandomRoutes(result.slice(0, 3));
-    //         })
-    // }, []);
+    const [pageRoutesPlaces, setPageRoutesPlaces] = useState([]);
+    const [pagePlaces, setPagePlaces] = useState(0);
+    const [pageSizePlaces] = useState(DEFAULT_PAGE_SIZE_PLACES);
 
     useEffect(() => {
         Promise.all([
@@ -103,6 +98,13 @@ export const RouteProvider = ({
             })
     }, [pageSize, page]);
 
+    useEffect(() => {
+        placeService.getPagePlace(pageSizePlaces, pagePlaces)
+            .then(result => {
+                setPageRoutesPlaces(result);
+            })
+    }, [pageSizePlaces, pagePlaces]);
+
     const onRouteCreateSubmit = async (data) => {
 
         try {
@@ -130,6 +132,7 @@ export const RouteProvider = ({
     };
 
     const onDeleteRoute = (routeId) => {
+
         routeService.deleteRoute(routeId);
         setRoutes(state => state.filter(x => x._id !== routeId));
 
@@ -139,25 +142,7 @@ export const RouteProvider = ({
     }
 
 
-    const onPlaceCreateSubmit = async (data) =>  {
-        try {validation.ValidationCreareRoute(data);
-            
-
-            const newRoute = await placeService.createPlace(data);
-            setPlaces(state => [...state, newRoute]);
-
-            // if (pageRoutes.length < DEFAULT_PAGE_SIZE) {
-            //     setPageRoutes(state => [...state, newRoute]);
-            // }
-            navigate(`/catalog/${data.routeId}`);
-        } catch (err) {
-            alert(err);
-        }
-    };
-
-
     const next = (page) => {
-
         if (page >= (Math.ceil(routes.length / pageSize) - 1)) {
             setPage(Math.ceil(routes.length / pageSize) - 1);
         } else {
@@ -193,14 +178,47 @@ export const RouteProvider = ({
         return placesById;
     }
 
+    const onPlaceCreateSubmit = async (data) =>  {
+        try {validation.ValidationCreareRoute(data);
+            
+
+            const newRoute = await placeService.createPlace(data);
+            setPlaces(state => [...state, newRoute]);
+
+            if (pageRoutesPlaces.length < DEFAULT_PAGE_SIZE_PLACES) {
+                setPageRoutesPlaces(state => [...state, newRoute]);
+            }
+
+            navigate(`/catalog/${data.routeId}`);
+        } catch (err) {
+            alert(err);
+        }
+    };
+
     const onDeletePlace = (placeId) => {
 
         placeService.deletePlace(placeId);
         setPlaces(state => state.filter(p => p._id !== placeId));
+        setPageRoutesPlaces(state => state.filter(x => x._id !== placeId));
 
-        // setPageRoutes(state => state.filter(x => x._id !== routeId));
+        navigate('/catalogPlace');
+    };
 
-        navigate('/catalog');
+
+    const nextPlace = (page) => {
+        if (page >= (Math.ceil(places.length / pageSizePlaces) - 1)) {
+            setPagePlaces(Math.ceil(places.length / pageSizePlaces) - 1);
+        } else {
+            setPagePlaces(page + 1);
+        }
+    };
+
+    const previousPlace = (page) => {
+        if (page <= 0) {
+            setPagePlaces(0);
+        } else {
+            setPagePlaces(page - 1);
+        }
     };
 
     const context = {
@@ -208,7 +226,6 @@ export const RouteProvider = ({
         getAllPlacesById,
         onDeletePlace,
 
-        pageRoutes,
         routes,
         getRoute,
         randomRoutes,
@@ -222,9 +239,15 @@ export const RouteProvider = ({
         getPlaceById,
         onPlaceCreateSubmit,
 
+        pageRoutes,
         next,
         previous,
         page,
+
+        pageRoutesPlaces,
+        nextPlace,
+        previousPlace,
+        pagePlaces,
     };
 
     return (

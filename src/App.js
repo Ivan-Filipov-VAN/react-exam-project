@@ -17,8 +17,8 @@ import { Footer } from './components/Footer/Footer';
 import { AboutPage } from './components/AoutPage/AboutPage';
 import { RouteGuard } from './components/common/RouteGuard';
 import { OwnerGuard } from './components/common/OwnerGuard';
-import { CreatePlace } from './components/CreatePage/CreatePlace';
 import { PlaceDetailsPage } from './components/CatalogPage/PlaceDetailsPage'
+import { CatalogPagePlace } from './components/CatalogPage/CatalogPagePlace';
 
 function App() {
 
@@ -31,6 +31,7 @@ function App() {
                         <Route path='/' element={<HomePage />} />
                         <Route path='/catalog' element={<CatalogPage />} />
                         <Route path='/catalog/:routeId' element={<RouteDetailsPage />} />
+                        <Route path='/catalogPlace' element={<CatalogPagePlace />} />
                         <Route path='/catalogPlace/:placeId' element={<PlaceDetailsPage />} />
                         <Route path='/login' element={<LoginPage />} />
                         <Route path='/register' element={<RegisterPage />} />

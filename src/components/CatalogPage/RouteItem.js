@@ -35,6 +35,7 @@ export const RouteItem = (route) => {
     }
 
     const ifUserCanLike = canLike === 0 && route._ownerId !== userId;
+
     const path = route.routeId ? 'catalogPlace' : 'catalog';
 
     return (
@@ -46,12 +47,6 @@ export const RouteItem = (route) => {
                     <h4>{route.country}</h4>
                     <p>{route.description.length >= 10 ? route.description.slice(0, 20) + '...' : route.description}</p>
                     <p>Likes: {likes}</p>
-
-
-
-                    {/* <Link to={`/catalog/${route._id}`} className={`${styles.divNavigation} btn-pro`} >More Details</Link> */}
-
-                    {/* <button className="btn card-btn">Discover place</button> */}
                 </div>
             </Link>
             {(isAuthenticated && ifUserCanLike) && <button onClick={onLikeClick} className="btn-like"><i className="fa-regular fa-thumbs-up"></i></button>}

@@ -1,0 +1,40 @@
+.catalog {
+    text-align: center;
+    width: 68%;
+    margin: 72px auto 120px;
+
+}
+
+.catalog__title {
+    font-size: 38px;
+}
+
+.catalog__title-sub {
+    font-size: 24px;
+    opacity: 0.8;
+    margin-bottom: 38px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1vw;
+}
+
+@media only screen and (max-width: 1200px) {
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 660px) {
+    .cards {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

@@ -8,6 +8,11 @@ export const getAllPlaces = async () => {
     return routes;
 }
 
+export const getOnePlace = async (placeId) => {
+    const result = await get(`${baseUrl}/${placeId}`);  
+    return result;
+}
+
 export const getAllPlacesInRoute = async (routeId) => {
     const result = await get(`${baseUrl}?where=routeId%3D%22${routeId}%22`);
     const routes = Object.values(result);
@@ -34,4 +39,8 @@ export const getPlaceByIdWithOwner = async (placeId) => {
 
 export const deletePlace = async (placeId) => {
     del(`${baseUrl}/${placeId}`);
+};
+
+export const getPagePlace = async (pageSize, page) => {
+    return await get(`${baseUrl}?pageSize=${pageSize}&offset=${page * pageSize}`);
 };

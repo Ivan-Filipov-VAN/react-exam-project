@@ -15,8 +15,8 @@ export const createRoute = async (data) => {
 };
 
 export const getOneRoute = async (routeId) => {
-    const result = await get(`/data/routes/${routeId}`);  
-    return result;
+        const result = await get(`/data/routes/${routeId}`);  
+        return result;
 }
 
 export const deleteRoute = async (routeId) => {
