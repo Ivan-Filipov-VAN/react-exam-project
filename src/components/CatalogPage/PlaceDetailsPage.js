@@ -123,7 +123,7 @@ export const PlaceDetailsPage = () => {
             {
                 isOwner && (
                     <div className={styles['place-button-group']}>
-                        <Link to={'/catalog'} className={styles['place-btn-edit']}>EDIT</Link>
+                        <Link to={`/catalogPlace/${placeId}/edit`} className={styles['place-btn-edit']}>EDIT</Link>
                         <button onClick={() => onDeletePlaceClick(place._id)} className={styles['place-btn-delete']}  >DELETE</button>
                     </div>
                 )

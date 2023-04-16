@@ -21,6 +21,8 @@ export const RouteProvider = ({
     const [page, setPage] = useState(0);
     const [pageSize] = useState(DEFAULT_PAGE_SIZE);
 
+    const [ searchQuerry, setSearchQuerry ] = useState("");
+
     const [ places, setPlaces ] = useState([]);
     const [randomPlaces, setRandomPlaces] = useState([]);
     const [pageRoutesPlaces, setPageRoutesPlaces] = useState([]);
@@ -91,12 +93,21 @@ export const RouteProvider = ({
 
     }, [routes, places]);
 
+
     useEffect(() => {
-        routeService.getPageRoute(pageSize, page)
+        routeService.getPageRoute(pageSize, page, searchQuerry)
             .then(result => {
                 setPageRoutes(result);
             })
-    }, [pageSize, page]);
+    }, [pageSize, page, searchQuerry]);
+
+
+    // useEffect(() => {
+    //     routeService.getPageRoute(pageSize, page, )
+    //         .then(result => {
+    //             setPageRoutes(result);
+    //         })
+    // }, [pageSize, page]);
 
     useEffect(() => {
         placeService.getPagePlace(pageSizePlaces, pagePlaces)
@@ -141,7 +152,6 @@ export const RouteProvider = ({
         navigate('/catalog');
     }
 
-
     const next = (page) => {
         if (page >= (Math.ceil(routes.length / pageSize) - 1)) {
             setPage(Math.ceil(routes.length / pageSize) - 1);
@@ -158,6 +168,19 @@ export const RouteProvider = ({
         }
     };
 
+    const onSearchQuerry = (querry) => {
+        const search = querry.querry.trim();
+        if (searchQuerry !== search ) {
+            setPage(0);
+            setSearchQuerry(search);
+        } 
+    }
+
+    const onResetCatalog = () => {
+        setPage(0);
+        setSearchQuerry('');
+    }
+
     const getRoute = (routeId) => {
         console.log(routes);
         return routes.find(r => r._id === routeId);
@@ -166,33 +189,45 @@ export const RouteProvider = ({
 
     const setMainPlaces = (place) => {
         setPlaces(state => [place, ...state]);
+
+        if (pageRoutesPlaces.length < DEFAULT_PAGE_SIZE_PLACES) {
+            setPageRoutesPlaces(state => [...state, place]);
+        }
     }
 
     const getPlaceById = (placeId) => {
         return places.find(p => p._id === placeId);
     }
 
-    const getAllPlacesById = (routeId) => {
-        const placesById = places.filter(p => p.routeId === routeId);
-        console.log(placesById)
-        return placesById;
-    }
+    // const getAllPlacesById = (routeId) => {
+    //     const placesById = places.filter(p => p.routeId === routeId);
+    //     console.log(placesById)
+    //     return placesById;
+    // }
 
-    const onPlaceCreateSubmit = async (data) =>  {
-        try {validation.ValidationCreareRoute(data);
+    // const onPlaceCreateSubmit = async (data) =>  {
+    //     try {validation.ValidationCreareRoute(data);
             
 
-            const newRoute = await placeService.createPlace(data);
-            setPlaces(state => [...state, newRoute]);
+    //         const newRoute = await placeService.createPlace(data);
+    //         setPlaces(state => [...state, newRoute]);
 
-            if (pageRoutesPlaces.length < DEFAULT_PAGE_SIZE_PLACES) {
-                setPageRoutesPlaces(state => [...state, newRoute]);
-            }
+    //         if (pageRoutesPlaces.length < DEFAULT_PAGE_SIZE_PLACES) {
+    //             setPageRoutesPlaces(state => [...state, newRoute]);
+    //         }
 
-            navigate(`/catalog/${data.routeId}`);
-        } catch (err) {
-            alert(err);
-        }
+    //         navigate(`/catalog/${data.routeId}`);
+    //     } catch (err) {
+    //         alert(err);
+    //     }
+    // };
+
+    const onPlaceEditSubmit = async (data) => {
+        const newPlace = await placeService.editPlace(data._id, data);
+        setPlaces(state => state.map(x => x._id === data._id ? newPlace : x));
+        setPageRoutesPlaces(state => state.map(x => x._id === data._id ? newPlace : x));
+        setRandomPlaces(state => state.map(x => x._id === data._id ? newPlace : x));
+        navigate(`/catalogPlace/${data._id}`);
     };
 
     const onDeletePlace = (placeId) => {
@@ -203,7 +238,6 @@ export const RouteProvider = ({
 
         navigate('/catalogPlace');
     };
-
 
     const nextPlace = (page) => {
         if (page >= (Math.ceil(places.length / pageSizePlaces) - 1)) {
@@ -223,7 +257,7 @@ export const RouteProvider = ({
 
     const context = {
 
-        getAllPlacesById,
+        // getAllPlacesById,
         onDeletePlace,
 
         routes,
@@ -237,12 +271,15 @@ export const RouteProvider = ({
         randomPlaces,
         setMainPlaces,
         getPlaceById,
-        onPlaceCreateSubmit,
+        // onPlaceCreateSubmit,
+        onPlaceEditSubmit,
 
         pageRoutes,
         next,
         previous,
         page,
+        onSearchQuerry,
+        onResetCatalog,
 
         pageRoutesPlaces,
         nextPlace,

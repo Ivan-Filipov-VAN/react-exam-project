@@ -34,12 +34,11 @@ export const RouteDetailsPage = () => {
     const [showAddPlace, setShowAddPlace] = useState(false);
 
     useEffect(() => {
-
         Promise.all([
             routeService.getOneRoute(routeId),
             commentService.getAllComments(routeId),
-            // placeService.getAllPlacesInRoute(routeId),
-            getAllPlacesById(routeId)
+            placeService.getAllPlacesInRoute(routeId),
+            // getAllPlacesById(routeId)
         ])
             .then(([routeData
                 , comments
@@ -51,7 +50,6 @@ export const RouteDetailsPage = () => {
                 })
 
                 setPlaces(routePlaces)
-                // setPlaces(getAllPlacesById(routeId))
                 
             })
 

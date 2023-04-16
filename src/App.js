@@ -19,6 +19,7 @@ import { RouteGuard } from './components/common/RouteGuard';
 import { OwnerGuard } from './components/common/OwnerGuard';
 import { PlaceDetailsPage } from './components/CatalogPage/PlaceDetailsPage'
 import { CatalogPagePlace } from './components/CatalogPage/CatalogPagePlace';
+import { EditPlace } from './components/EditRoute/EditPlace';
 
 function App() {
 
@@ -46,6 +47,7 @@ function App() {
 
                         <Route element={<OwnerGuard />}>
                             <Route path='/catalog/:routeId/edit' element={<EditRoute />} />
+                            <Route path='/catalogPlace/:placeId/edit' element={<EditPlace />} />
                         </Route>
 
 

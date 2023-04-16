@@ -1,4 +1,4 @@
-import { get, post, del } from '../api/api'
+import { get, post, del, put } from '../api/api'
 
 const baseUrl = '/data/places';
 
@@ -22,6 +22,11 @@ export const getAllPlacesInRoute = async (routeId) => {
 export const createPlace = async (data) => {
     const result = await post(baseUrl, data);
 
+    return result;
+};
+
+export const editPlace = async (placeId, data) => {
+    const result = await put(`${baseUrl}/${placeId}`, data)
     return result;
 };
 
