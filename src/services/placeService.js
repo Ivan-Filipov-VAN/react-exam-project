@@ -46,6 +46,12 @@ export const deletePlace = async (placeId) => {
     del(`${baseUrl}/${placeId}`);
 };
 
-export const getPagePlace = async (pageSize, page) => {
-    return await get(`${baseUrl}?pageSize=${pageSize}&offset=${page * pageSize}`);
+// export const getPagePlace = async (pageSize, page) => {
+//     return await get(`${baseUrl}?pageSize=${pageSize}&offset=${page * pageSize}`);
+// };
+
+export const getPagePlace = async (pageSize, page, searchQuerry) => {
+    const search = searchQuerry ? '&where=' + encodeURIComponent(`country="${searchQuerry}"`) : '' ;
+
+    return await get(`${baseUrl}?pageSize=${pageSize}&offset=${page * pageSize}${search}`);
 };

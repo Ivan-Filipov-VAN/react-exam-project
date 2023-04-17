@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { RouteContext } from '../../contexts/RouteContext';
+import { PlaceContext } from '../../contexts/PlaceContext';
 import { Addcomment } from '../Comments/AddComment';
 
 import * as routeService from '../../services/routeService';
@@ -28,7 +29,8 @@ export const RouteDetailsPage = () => {
     const [canLike, setCalLike] = useState(0);
 
     const { userId, userEmail, userImageUrl, isAuthenticated } = useContext(AuthContext);
-    const { onDeleteRoute, setMainPlaces, getAllPlacesById } = useContext(RouteContext);
+    const { onDeleteRoute } = useContext(RouteContext);
+    const { setMainPlaces } = useContext(PlaceContext);
 
     const [showAddComment, setShowAddComment] = useState(false);
     const [showAddPlace, setShowAddPlace] = useState(false);

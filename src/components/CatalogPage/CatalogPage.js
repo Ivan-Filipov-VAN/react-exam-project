@@ -16,8 +16,6 @@ export const CatalogPage = () => {
     const { pageRoutes, previous, next, page, onSearchQuerry, onResetCatalog } = useContext(RouteContext);
 
 
-
-
     const { values, changeHandler, onSubmit, changeValues } = useForm({
         querry: '',
     }, onSearchQuerry);

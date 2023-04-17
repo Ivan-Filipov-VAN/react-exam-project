@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 
 import { AuthContext } from '../../contexts/AuthContext';
-import { RouteContext } from '../../contexts/RouteContext';
+import { PlaceContext } from '../../contexts/PlaceContext';
 
 import * as placeService from '../../services/placeService';
 import * as routeService from '../../services/routeService';
@@ -20,7 +20,7 @@ export const PlaceDetailsPage = () => {
     const [canLike, setCalLike] = useState(0);
 
     const { userId, isAuthenticated } = useContext(AuthContext);
-    const { onDeletePlace } = useContext(RouteContext);
+    const { onDeletePlace } = useContext(PlaceContext);
 
 
     useEffect(() => {
@@ -28,24 +28,19 @@ export const PlaceDetailsPage = () => {
         // placeService.getPlaceByIdWithOwner (placeId)
         placeService.getOnePlace(placeId)
             .then(res => {
-                console.log(res)
 
                 routeService.getOneRoute(res.routeId)
                     .then(result => setRoute(result))
-                    .catch(res => setRoute(undefined));
+                    .catch(res => {
+                        setRoute(undefined)
+                    }
+                    
+                    );
 
                 setPlace(res)
             })
 
     }, [placeId]);
-
-    // useEffect(() => {
-    //     routeService.getOneRoute(place.routeId)
-    //         .then(res => {
-    //             console.log(res)
-    //             setRoute(res)
-    //         })
-    // }, [place]);
 
     useEffect(() => {
         likeService.getRoutesLikes(placeId)
@@ -64,7 +59,6 @@ export const PlaceDetailsPage = () => {
     const isOwner = userId === place._ownerId;
 
     const onDeletePlaceClick = (placeId) => {
-        console.log(placeId);
         onDeletePlace(placeId);
 
     };

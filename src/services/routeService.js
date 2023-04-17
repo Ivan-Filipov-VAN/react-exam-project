@@ -33,10 +33,7 @@ export const editRoute = async (routeId, data) => {
 // };
 
 export const getPageRoute = async (pageSize, page, searchQuerry) => {
-    console.log(searchQuerry);
     const search = searchQuerry ? '&where=' + encodeURIComponent(`country="${searchQuerry}"`) : '' ;
-    console.log(search);
-    console.log('123');
 
     return await get(`/data/routes?pageSize=${pageSize}&offset=${page * pageSize}${search}`);
 };

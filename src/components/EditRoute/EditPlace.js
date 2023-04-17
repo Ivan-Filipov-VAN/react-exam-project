@@ -7,11 +7,11 @@ import Form from 'react-bootstrap/Form';
 import * as placeService from '../../services/placeService';
 import { useEffect, useContext } from 'react';
 
-import { RouteContext } from '../../contexts/RouteContext';
+import { PlaceContext } from '../../contexts/PlaceContext';
 
 export const EditPlace = () => {
 
-    const { onPlaceEditSubmit } = useContext(RouteContext);
+    const { onPlaceEditSubmit } = useContext(PlaceContext);
     const { placeId } = useParams();
 
 
@@ -26,7 +26,6 @@ export const EditPlace = () => {
     }, onPlaceEditSubmit);
 
     useEffect(() => {
-        console.log(placeId);
         placeService.getOnePlace(placeId)
         .then(res => {
             changeValues(res);

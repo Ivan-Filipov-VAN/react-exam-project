@@ -30,20 +30,9 @@ export const CreatePlaceModal = ({
     }, onAddPlace);
 
     useEffect(() => {
-        // routeService.getOneRoute(routeId)
-        //     .then(res => {
-        //         const newValue = {
-        //             imageUrl: '',
-        //             title: '',
-        //             country: res.country,
-        //             description: '',
-        //             routeId: res._id,
-        //             location: res.title,
-        //         }
-        //         changeValues(newValue);
-        //     })
+
         const res = getRoute(routeId);
-        console.log(res);
+
         const newValue = {
             imageUrl: '',
             title: '',
@@ -53,13 +42,9 @@ export const CreatePlaceModal = ({
             location: res.title,
         }
 
-        console.log(newValue)
-
         changeValues(newValue);
 
     }, [routeId]);
-
-
 
     return (
         <>

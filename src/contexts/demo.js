@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as routeService from '../services/routeService';
+import * as placeService from '../services/placeService';
 import * as validation from '../utils/validation';
 
 export const RouteContext = createContext();
@@ -10,6 +11,7 @@ export const RouteProvider = ({
 }) => {
 
     const DEFAULT_PAGE_SIZE = 6;
+    const DEFAULT_PAGE_SIZE_PLACES = 12;
 
     const navigate = useNavigate();
 
@@ -19,20 +21,30 @@ export const RouteProvider = ({
     const [page, setPage] = useState(0);
     const [pageSize] = useState(DEFAULT_PAGE_SIZE);
 
-    const [searchQuerry, setSearchQuerry] = useState("");
+    const [ searchQuerry, setSearchQuerry ] = useState("");
+
+    const [ places, setPlaces ] = useState([]);
+    const [randomPlaces, setRandomPlaces] = useState([]);
+    const [pageRoutesPlaces, setPageRoutesPlaces] = useState([]);
+    const [pagePlaces, setPagePlaces] = useState(0);
+    const [pageSizePlaces] = useState(DEFAULT_PAGE_SIZE_PLACES);
 
     useEffect(() => {
-
-        routeService.getAllRoutes()
-
-
-            .then(resRoutes => setRoutes(resRoutes))
+        Promise.all([
+            routeService.getAllRoutes(),
+            placeService.getAllPlaces(),
+        ])
+        .then(([resRoutes, resPlaces]) => {
+            setRoutes(resRoutes);
+            setPlaces(resPlaces);
+        })
     }, []);
 
 
     useEffect(() => {
 
         const interval = setInterval(() => {
+
             let q = [];
             let temp = [...routes]
             if (temp.length > 0) {
@@ -50,13 +62,36 @@ export const RouteProvider = ({
                 q.push(temp[ind]);
                 temp.splice(ind, 1);
             }
+
             setRandomRoutes(q);
+
+            let w = [];
+            let temp2 = [...places]
+            if (temp2.length > 0) {
+                let ind = Math.floor(Math.random() * temp2.length);
+                w.push(temp2[ind]);
+                temp2.splice(ind, 1);
+            }
+            if (temp2.length > 0) {
+                let ind = Math.floor(Math.random() * temp2.length);
+                w.push(temp2[ind]);
+                temp2.splice(ind, 1);
+            }
+            if (temp2.length > 0) {
+                let ind = Math.floor(Math.random() * temp2.length);
+                w.push(temp2[ind]);
+                temp2.splice(ind, 1);
+            }
+
+            setRandomPlaces(w);
+
+
         }, 5000);
         return () => {
             clearInterval(interval);
         };
 
-    }, [routes]);
+    }, [routes, places]);
 
 
     useEffect(() => {
@@ -65,6 +100,14 @@ export const RouteProvider = ({
                 setPageRoutes(result);
             })
     }, [pageSize, page, searchQuerry]);
+
+
+    useEffect(() => {
+        placeService.getPagePlace(pageSizePlaces, pagePlaces)
+            .then(result => {
+                setPageRoutesPlaces(result);
+            })
+    }, [pageSizePlaces, pagePlaces]);
 
     const onRouteCreateSubmit = async (data) => {
 
@@ -107,11 +150,7 @@ export const RouteProvider = ({
         setPageRoutes(state => state.filter(x => x._id !== routeId));
 
         navigate('/catalog');
-    };
-
-    const getRoute = (routeId) => {
-        return routes.find(r => r._id === routeId);
-    };
+    }
 
     const next = (page) => {
         if (page >= (Math.ceil(routes.length / pageSize) - 1)) {
@@ -131,10 +170,10 @@ export const RouteProvider = ({
 
     const onSearchQuerry = (querry) => {
         const search = querry.querry.trim();
-        if (searchQuerry !== search) {
+        if (searchQuerry !== search ) {
             setPage(0);
             setSearchQuerry(search);
-        }
+        } 
     }
 
     const onResetCatalog = () => {
@@ -142,14 +181,71 @@ export const RouteProvider = ({
         setSearchQuerry('');
     }
 
+    const getRoute = (routeId) => {
+        return routes.find(r => r._id === routeId);
+    };
 
+    const setMainPlaces = (place) => {
+        setPlaces(state => [place, ...state]);
+
+        if (pageRoutesPlaces.length < DEFAULT_PAGE_SIZE_PLACES) {
+            setPageRoutesPlaces(state => [...state, place]);
+        }
+    }
+
+    const getPlaceById = (placeId) => {
+        return places.find(p => p._id === placeId);
+    }
+
+
+    const onPlaceEditSubmit = async (data) => {
+
+        try {
+            validation.ValidationCreareRoute(data);
+            
+            const newPlace = await placeService.editPlace(data._id, data);
+            setPlaces(state => state.map(x => x._id === data._id ? newPlace : x));
+            setPageRoutesPlaces(state => state.map(x => x._id === data._id ? newPlace : x));
+            setRandomPlaces(state => state.map(x => x._id === data._id ? newPlace : x));
+            navigate(`/catalogPlace/${data._id}`);
+        } catch (err) {
+            alert(err.message);
+        }
+    };
+
+    const onDeletePlace = (placeId) => {
+
+        placeService.deletePlace(placeId);
+        setPlaces(state => state.filter(p => p._id !== placeId));
+        setPageRoutesPlaces(state => state.filter(x => x._id !== placeId));
+
+        navigate('/catalogPlace');
+    };
+
+    const nextPlace = (page) => {
+        if (page >= (Math.ceil(places.length / pageSizePlaces) - 1)) {
+            setPagePlaces(Math.ceil(places.length / pageSizePlaces) - 1);
+        } else {
+            setPagePlaces(page + 1);
+        }
+    };
+
+    const previousPlace = (page) => {
+        if (page <= 0) {
+            setPagePlaces(0);
+        } else {
+            setPagePlaces(page - 1);
+        }
+    };
 
     const context = {
+
+
 
         routes,
         getRoute,
         randomRoutes,
-
+        
         onRouteCreateSubmit,
         onRouteEditSubmit,
         onDeleteRoute,
@@ -161,6 +257,17 @@ export const RouteProvider = ({
         onSearchQuerry,
         onResetCatalog,
 
+
+        randomPlaces,
+        setMainPlaces,
+        getPlaceById,
+        onPlaceEditSubmit,
+        onDeletePlace,
+
+        pageRoutesPlaces,
+        nextPlace,
+        previousPlace,
+        pagePlaces,
     };
 
     return (

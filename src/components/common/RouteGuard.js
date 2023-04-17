@@ -9,7 +9,6 @@ export const RouteGuard = ({
     const { isAuthenticated } = useContext(AuthContext);
 
     if (!isAuthenticated) {
-        console.log(isAuthenticated);
         return <Navigate to='/login' />
     }
 

@@ -33,11 +33,6 @@ export const PlaceItem = (place) => {
         setLikes(likes + 1);
     };
 
-    const onDislikeClick = () => {
-        likeService.onDislikeSubmit(place._id, userId);
-        setLikes(likes - 1);
-    };
-
     const isOwner = userId === place._ownerId;
     const ifUserCanLike = canLike === 0 && place._ownerId !== userId;
 
