@@ -94,7 +94,7 @@ export const RegisterPage = () => {
             <p>If you are already registered, Please click <Link to={'/login'}>HERE</Link> !</p>
 
             <Button variant="primary" type="submit">
-                Submit
+                Register
             </Button>
         </Form>
     );
